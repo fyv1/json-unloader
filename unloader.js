@@ -1,12 +1,14 @@
 const loadDiv = document.querySelector("#load");
 const unloadedDiv = document.querySelector("#unloaded");
 const payloadTxt = document.querySelector("#payloadTxt");
-const valuesForm = document.querySelector("#array")
+const valuesForm = document.querySelector("#array");
+const originalPayload = document.querySelector("#original");
 
 function unload() {
     loadDiv.style.display = "none";
     unloadedDiv.style.display = "block";
-    process();
+    originalPayload.innerHTML = payloadTxt.value;
+    process(payloadTxt.value);
 }
 
 function reset() {
@@ -15,35 +17,39 @@ function reset() {
     valuesForm.innerHTML = "";
 }
 
-function process() {
-    let payload = payloadTxt.value;
-    let data = JSON.parse(payload);
+function process(payloadToParse) {
+    payloadToParse.toString();
+    payloadToParse = JSON.stringify(payloadToParse);
+    console.log(payloadToParse);
+    
+    let data = JSON.parse(payloadToParse);
     let inputKeyEl;
     let inputValueEl;
 
-    for(let [key, entry] of Object.entries(data)) {
+    Object.keys(data).forEach(key => {
+        if (data[key] && typeof data[key] === "object") process(data[key]); // recurse.
+        else { 
+            inputKeyEl = document.createElement("input");
+            inputValueEl = document.createElement("input");
 
-        console.log(key+": "+ entry)
-        inputKeyEl = document.createElement("input");
-        inputValueEl = document.createElement("input");
+            inputKeyEl.type = "text";
+            inputKeyEl.setAttribute("value", key);
+            inputKeyEl.setAttribute("onclick", "selectByClick(this)")
 
-        inputKeyEl.type = "text";
-        inputKeyEl.setAttribute("value", key);
-        inputKeyEl.setAttribute("onclick", "selectByClick(this)")
+            inputValueEl.type = "text";
+            inputValueEl.setAttribute("value", data[key]);
+            inputValueEl.setAttribute("onclick", "selectByClick(this)")
 
-        inputValueEl.type = "text";
-        inputValueEl.setAttribute("value", entry);
-        inputValueEl.setAttribute("onclick", "selectByClick(this)")
-
-        valuesForm.appendChild(inputKeyEl);
-        valuesForm.appendChild(inputValueEl);
-        valuesForm.innerHTML += "<br>"
+            valuesForm.appendChild(inputKeyEl);
+            valuesForm.appendChild(inputValueEl);
+            valuesForm.innerHTML += "<br>";
+        }
+    });
         
-        
-    }
 }
 
 function selectByClick(elementRef) {
     elementRef.setSelectionRange(0, elementRef.value.length);
     navigator.clipboard.writeText(elementRef.value);
 }
+

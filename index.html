@@ -9,12 +9,19 @@
 <body>
     <div id="load">
         <label for="payloadTxt">Paste JSON payload</label><br>
-        <textarea name="payloadTxt" id="payloadTxt" cols="30" rows="10">
+        <textarea name="payloadTxt" id="payloadTxt" cols="30" rows="40">
 {
     "xd": true,
     "halo": "beka",
     "ff": {
-        "xdd":1
+        "xdd":1,
+        "lmao": [{
+            "wtf":"no tak",
+            "lorem":"ipsum",
+            "l2": [{
+                "ha":true
+            }]
+        }]
     }
 }   
         </textarea><br>
@@ -25,6 +32,7 @@
         <form id="array">
         </form>
         <button type="submit" onclick="reset()">try again</button>
+        <pre id="original"></pre>
     </div>
     
     <script src="unloader.js"></script>
