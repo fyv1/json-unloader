@@ -18,8 +18,8 @@ function reset() {
 }
 
 function process(payloadToParse) {
-    payloadToParse.toString();
-    payloadToParse = JSON.stringify(payloadToParse);
+    payloadToParse = payloadToParse.toString();
+    // payloadToParse = JSON.stringify(payloadToParse);
     console.log(payloadToParse);
     
     let data = JSON.parse(payloadToParse);
@@ -27,7 +27,7 @@ function process(payloadToParse) {
     let inputValueEl;
 
     Object.keys(data).forEach(key => {
-        if (data[key] && typeof data[key] === "object") process(data[key]); // recurse.
+        if (data[key] && typeof data[key] === "object") process(JSON.stringify(data[key])); // recurse.
         else { 
             inputKeyEl = document.createElement("input");
             inputValueEl = document.createElement("input");
