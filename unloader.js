@@ -29,9 +29,11 @@ function process() {
 
         inputKeyEl.type = "text";
         inputKeyEl.setAttribute("value", key);
+        inputKeyEl.setAttribute("onclick", "selectByClick(this)")
 
         inputValueEl.type = "text";
         inputValueEl.setAttribute("value", entry);
+        inputValueEl.setAttribute("onclick", "selectByClick(this)")
 
         valuesForm.appendChild(inputKeyEl);
         valuesForm.appendChild(inputValueEl);
@@ -41,7 +43,7 @@ function process() {
     }
 }
 
-function selectByClick() {
-    this.setSelectionRange(0, this.value.length);
-    navigator.clipboard.writeText(this.value);
+function selectByClick(elementRef) {
+    elementRef.setSelectionRange(0, elementRef.value.length);
+    navigator.clipboard.writeText(elementRef.value);
 }
